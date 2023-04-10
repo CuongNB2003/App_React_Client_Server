@@ -1,7 +1,7 @@
 import { Dimensions, FlatList, Image, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import ItemListNew from '../../component/ItemListNew';
-import { url_api_post } from '../../data/api';
+import { url_api_listSP, url_api_post } from '../../data/api';
 
 
 
@@ -11,11 +11,11 @@ const SearchScreen = () => {
   const [dataPost, setdataPost] = useState([])
 
   const getListSP = async () => {
-
     try {
-      const response = await fetch(url_api_post); // load dữ liệu
-      const json = await response.json();// chuyển dữ liệu thành json
-      setdataPost(json); // đổ dữ liệu vào state
+      const response = await fetch(url_api_listSP);
+      const json = await response.json();
+      setdataPost(json.data);  
+      console.log(json.data);
     } catch (err) {
       console.log(err);
     } finally {
@@ -49,7 +49,7 @@ const SearchScreen = () => {
       <FlatList
         data={dataPost}
         renderItem={({ item }) => <ItemListNew dulieu={item} />}
-        keyExtractor={item => item.id_post}
+        keyExtractor={item => item._id}
         refreshControl={
           <RefreshControl refreshing={reloading} onRefresh={getListSP} />
         } />

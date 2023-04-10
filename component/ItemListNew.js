@@ -7,8 +7,8 @@ const ItemListNew = ( props ) => {
         <View style={styles.container}>
             <Image source={{uri: dulieu.image}} style={styles.image} />
             <View style={styles.content}>
-                <Text numberOfLines={2} style={styles.textTitle}>{dulieu.title}</Text>
-                <Text numberOfLines={3} >{dulieu.content}</Text>
+                <Text numberOfLines={2} style={styles.textTitle}>{dulieu.name}</Text>
+                <Text numberOfLines={3} >{dulieu.price}</Text>
             </View>
         </View>
     )

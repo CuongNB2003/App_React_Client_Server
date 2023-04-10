@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList, Dimensions, TextInput, TouchableOpacity, Image, ScrollView, RefreshControl } from 'react-native'
 import React, { useState } from 'react'
 import ItemTinTuc from '../../component/ItemTinTuc';
-import { url_api_category, url_api_post } from '../../data/api';
+import { url_api_listSP, url_api_listTL } from '../../data/api';
 
 
 
@@ -17,11 +17,10 @@ const HomeScreen = ( props ) => {
         setStatus(status)
     }
 
-    const getData = () => {
-        fetch(url_api_post + '?_expand=tb_user')
+    const getData = async () => {
+        fetch(url_api_listSP)
             .then(async (res) => {
                 const posts = await res.json()
-                posts.reverse()
                 setData(posts)
                 setM_Data(posts)
                 setIsLoading(false)
@@ -32,7 +31,8 @@ const HomeScreen = ( props ) => {
     }
 
     const getCategory = () => {
-        fetch(url_api_category)
+        console.log(url_api_listTL);
+        fetch(url_api_listTL.data)
             .then(async (res) => {
                 const categories = await res.json()
                 setCategories(categories)
@@ -74,7 +74,7 @@ const HomeScreen = ( props ) => {
                         <TouchableOpacity style={[styles.btnTab, status === item.name && styles.btnTabActive]}
                             onPress={() => {
                                 setStatusFilter(item.name)
-                                setM_Data(data.filter((m_item) => m_item.categoryId == item.id).map((item) => (item)))
+                                setM_Data(data.filter((m_item) => m_item.categoryId == item._id).map((item) => (item)))
                             }}>
                             <Text style={[styles.textTab, status === item.name && styles.textActive]}>{item.name}</Text>
                         </TouchableOpacity>
@@ -82,12 +82,10 @@ const HomeScreen = ( props ) => {
                 }
             </ScrollView>
         </View>
-            <Text style={styles.textND}>Có thể bạn quan tâm</Text>
-
             <FlatList
                 data={m_Data}
                 renderItem={({ item, index }) =>
-                    <ItemTinTuc key={index} title={item.title} content={item.content} image={item.image} author={item.id} />
+                    <ItemTinTuc key={index} title={item.data.name} content={item.data.price} image={item.data.image} author={item.data.id_theloai} />
                 }
                 keyExtractor={(item, index) => index.toString()}
                 refreshControl={
