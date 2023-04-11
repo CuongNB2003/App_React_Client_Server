@@ -11,6 +11,7 @@ import HomeScreen from './screens/tabScreen/HomeScreen';
 import SettingScreen from './screens/tabScreen/SettingScreen';
 import DoiMatKhau from './screens/user/DoiMatKhau';
 import ThongTinCN from './screens/user/ThongTinCN';
+import { keys } from './data/api';
 
 
 

@@ -1,5 +1,6 @@
 import { Dimensions, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
+import { url } from '../data/api';
 
 
 const windownWidth = Dimensions.get('window').width;
@@ -13,13 +14,13 @@ const ItemTinTuc = (props) => {
                 <Text style={styles.textCategory}>Thể loại: {category}</Text>
             </View>
             <View style={styles.thanhngang}></View>
-            <Image source={{ uri: 'http://192.168.1.6:3000/'+image }} style={styles.image} />
+            <Image source={{ uri: url+image }} style={styles.image} />
             <View style={styles.content}>
                 <Text style={styles.textName}>Tên SP:{name}</Text>
                 <Text style={styles.textPrice} >Giá: {price} VND</Text>
             </View>
             <View style={styles.thanhngang}></View>
-            <Text style={styles.textDesc} >Mô tả: {desc}</Text>
+            <Text style={styles.textDesc} numberOfLines={3}>Mô tả: {desc}</Text>
         </View>
     )
 
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 200,
         borderRadius: 10,
-        backgroundColor: 'red',
+        
     },
     textCategory: {
         marginLeft: 15,

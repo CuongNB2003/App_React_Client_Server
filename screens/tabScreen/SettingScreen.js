@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { keys, url_api_post, url_api_user } from '../../data/api';
+import { keys, url, url_api_post } from '../../data/api';
 
 
 
@@ -19,27 +19,30 @@ const SettingScreen = (props) => {
   const getLoginInfo = async () => {
     try {
       const value = await AsyncStorage.getItem(keys);
+
       if (value !== null) {
 
         setloginInfo(JSON.parse(value))
+        console.log("đây là mảng user "+ loginInfo);
+        console.log(loginInfo);
 
         let obj = JSON.parse(value)
         setid(obj.id)
         setfullname(obj.fullname)
-        setimage(obj.image)
+        setimage(obj.avata)
         setusername(obj.username)
         setpassword(obj.password)
 
-        fetch(url_api_post + '?tb_usersId=' + obj.id)
-                .then(async (res) => {
-                    const posts = await res.json()
-                    posts.reverse()
-                    setdataUser(posts)
-                    console.log(dataUser.length)
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+        // fetch(url_api_post + '?tb_usersId=' + obj.id)
+        //         .then(async (res) => {
+        //             const posts = await res.json()
+        //             posts.reverse()
+        //             setdataUser(posts)
+        //             console.log(dataUser.length)
+        //         })
+        //         .catch(err => {
+        //             console.log(err);
+        //         })
       }
     } catch (e) {
       console.log(e);
@@ -50,7 +53,8 @@ const SettingScreen = (props) => {
 
     try {
       await AsyncStorage.clear()
-      Updates.reloadAsync()
+      // Updates.reloadAsync()
+      console.log("đăng xuất thành công");
     } catch (e) {
       console.log(e);
     }
@@ -66,18 +70,6 @@ const SettingScreen = (props) => {
     console.log(loginInfo);
   }
 
-  const ChuyenMan_MyPost = () => {
-    props.navigation.navigate('MyPost', loginInfo)
-    console.log(loginInfo);
-  }
-
-  const ChuyenMan_AddPost = () => {
-    props.navigation.navigate('AddPost', loginInfo)
-    console.log(loginInfo);
-  }
-
-
-
   React.useEffect(() => {
     const unsubscribe = props.navigation.addListener('focus', () => {
       getLoginInfo();
@@ -91,7 +83,7 @@ const SettingScreen = (props) => {
   return (
     <View style={styles.container}>
 
-      <Image source={{ uri: image }}
+      <Image source={{ uri: url+image }}
         style={styles.img_avt} />
       <Text style={{ margin: 10, fontSize: 24, fontWeight: 'bold' }}>{fullname}</Text>
 

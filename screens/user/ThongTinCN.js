@@ -13,69 +13,69 @@ const ThongTinCN = ({ navigation, route }) => {
   const [image, setimage] = useState(null)
   const [id, setid] = useState(null)
 
-  const pickImage = async () => {
+  // const pickImage = async () => {
 
-    // Đọc ảnh từ thư viện thì không cần khai báo quyền
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3], // khung view cắt ảnh 
-      quality: 1,
-    });
-
-
-    console.log(result);
+  //   // Đọc ảnh từ thư viện thì không cần khai báo quyền
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3], // khung view cắt ảnh 
+  //     quality: 1,
+  //   });
 
 
-    if (!result.canceled) {
-      // chuyển ảnh thành base64 để upload lên json
-      let _uri = result.assets[0].uri;  // địa chỉ file ảnh đã chọn
-      let file_ext = _uri.substring(_uri.lastIndexOf('.') + 1); // lấy đuôi file
+  //   console.log(result);
 
 
-      FileSystem.readAsStringAsync(_uri, { encoding: 'base64' })
-        .then((res) => {
-          // phải nối chuỗi với tiền tố data image
-          setimage('data:image/' + file_ext + ';base64,' + res)
-          console.log(image);
-          // upload ảnh lên api thì dùng PUT có thể viết ở đây
-          updateUser()
-        });
+  //   if (!result.canceled) {
+  //     // chuyển ảnh thành base64 để upload lên json
+  //     let _uri = result.assets[0].uri;  // địa chỉ file ảnh đã chọn
+  //     let file_ext = _uri.substring(_uri.lastIndexOf('.') + 1); // lấy đuôi file
 
 
-    }
+  //     FileSystem.readAsStringAsync(_uri, { encoding: 'base64' })
+  //       .then((res) => {
+  //         // phải nối chuỗi với tiền tố data image
+  //         setimage('data:image/' + file_ext + ';base64,' + res)
+  //         console.log(image);
+  //         // upload ảnh lên api thì dùng PUT có thể viết ở đây
+  //         updateUser()
+  //       });
 
 
-  }
+  //   }
 
-  const updateUser = () => {
-    let user = {
-      id: id,
-      fullname: fullname,
-      image: image,
-      username: username,
-      password: password
-    }
 
-    let url_api_update = url_api_user + '/' + id;
-    fetch(url_api_update, {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    })
-      .then(async (res) => {
-        if (res.status == 200)
-          console.log(user);
-        alert("Cập nhật thành công")
-        await AsyncStorage.setItem(keys, JSON.stringify(user))
-      })
-      .catch((ex) => {
-        console.log(ex);
-      });
-  }
+  // }
+
+  // const updateUser = () => {
+  //   let user = {
+  //     id: id,
+  //     fullname: fullname,
+  //     image: image,
+  //     username: username,
+  //     password: password
+  //   }
+
+  //   let url_api_update = url_api_user + '/' + id;
+  //   fetch(url_api_update, {
+  //     method: 'PUT',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(user),
+  //   })
+  //     .then(async (res) => {
+  //       if (res.status == 200)
+  //         console.log(user);
+  //       alert("Cập nhật thành công")
+  //       await AsyncStorage.setItem(keys, JSON.stringify(user))
+  //     })
+  //     .catch((ex) => {
+  //       console.log(ex);
+  //     });
+  // }
 
   React.useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
