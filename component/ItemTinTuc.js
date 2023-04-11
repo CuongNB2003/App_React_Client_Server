@@ -4,43 +4,22 @@ import React from 'react'
 
 const windownWidth = Dimensions.get('window').width;
 const ItemTinTuc = (props) => {
-    const { title, content, image, author } = props
+    const { price, name, image, desc, category } = props
 
 
     return (
         <View style={styles.container}>
             <View style={styles.phiatren}>
-                <Text style={styles.textTacGia}>{author}</Text>
-                <TouchableOpacity style={styles.follow}>
-                    <Image source={require('../assets/follow.png')} resizeMode='stretch'
-                        style={{ width: 20, height: 20, marginRight: 5 }} />
-                    <Text style={styles.texttieude}>Theo dõi</Text>
-                </TouchableOpacity>
+                <Text style={styles.textCategory}>Thể loại: {category}</Text>
             </View>
             <View style={styles.thanhngang}></View>
-            <Image source={{ uri: image }} style={styles.image} />
+            <Image source={{ uri: 'http://192.168.1.6:3000/'+image }} style={styles.image} />
             <View style={styles.content}>
-                <Text style={styles.textTitle}>{title}</Text>
-                <Text style={styles.texttieude} >{content}</Text>
+                <Text style={styles.textName}>Tên SP:{name}</Text>
+                <Text style={styles.textPrice} >Giá: {price} VND</Text>
             </View>
             <View style={styles.thanhngang}></View>
-            <View style={styles.phiaduoi}>
-                <TouchableOpacity style={styles.bieutuong}>
-                    <Image source={require('../assets/heart.png')} resizeMode='stretch'
-                        style={{ width: 20, height: 20, marginRight: 5 }} />
-                    <Text style={styles.texttieude}>Yêu thích</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.bieutuong}>
-                    <Image source={require('../assets/message.png')} resizeMode='stretch'
-                        style={{ width: 20, height: 20, marginRight: 5 }} />
-                    <Text style={styles.texttieude}>Bình luận</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.bieutuong}>
-                    <Image source={require('../assets/share.png')} resizeMode='stretch'
-                        style={{ width: 20, height: 20, marginRight: 5 }} />
-                    <Text style={styles.texttieude}>Chia sẻ</Text>
-                </TouchableOpacity>
-            </View>
+            <Text style={styles.textDesc} >Mô tả: {desc}</Text>
         </View>
     )
 
@@ -62,8 +41,9 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: 'red',
     },
-    textTitle: {
-        fontSize: 24,
+    textCategory: {
+        marginLeft: 15,
+        fontSize: 18,
         fontWeight: 'bold',
         color: 'black'
     },
@@ -93,36 +73,22 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center'
     },
-    bieutuong: {
+    textPrice: {
         marginLeft: 10,
-        flexDirection: 'row',
-        width: '33.33%',
-        height: '100%',
-        aspectRatio: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    follow: {
-        marginTop: 10,
-        marginLeft: 10,
-        flexDirection: 'row',
-        width: '30%',
-        height: '100%',
-        aspectRatio: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    texttieude: {
         fontSize: 16,
+        color: 'red'
     },
-    textTacGia: {
-        width: '70%',
-        marginTop: 10,
+    textDesc: {
         fontSize: 18,
-        fontWeight: 'bold',
         marginLeft: 20,
+        marginBottom: 10,
     },
-
+    textName: {
+        fontWeight: 'bold',
+        fontSize: 18,
+        marginLeft: 10,
+        marginBottom: 10,
+    },
 
 
 })

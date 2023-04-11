@@ -3,12 +3,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useState } from 'react';
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Login from './screens/login/Login';
 import TaoTaiKhoan from './screens/login/TaoTaiKhoan';
 import HomeScreen from './screens/tabScreen/HomeScreen';
-import SearchScreen from './screens/tabScreen/SearchScreen';
 import SettingScreen from './screens/tabScreen/SettingScreen';
 import DoiMatKhau from './screens/user/DoiMatKhau';
 import ThongTinCN from './screens/user/ThongTinCN';
@@ -25,9 +24,6 @@ function MyTabs() {
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen name="Home" component={HomeScreen} options={{
         tabBarIcon: () => <Image source={require('./assets/house.png')} style={{ width: 25, height: 25 }} resizeMode="stretch" />
-      }} />
-      <Tab.Screen name="Search" component={SearchScreen} options={{
-        tabBarIcon: () => <Image source={require('./assets/search.png')} style={{ width: 25, height: 25 }} resizeMode="stretch" />
       }} />
       <Tab.Screen name="Setting" component={SettingScreen} options={{
         tabBarIcon: () => <Image source={require('./assets/settings.png')} style={{ width: 25, height: 25 }} resizeMode="stretch" />

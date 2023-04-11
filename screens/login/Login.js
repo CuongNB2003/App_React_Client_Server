@@ -38,21 +38,21 @@ const BottomComponent = () => {
       </View>
 
       <TouchableOpacity>
-        <View style={{ height: 50, width: windownWidth - 60, marginTop: 20, borderWidth: 1, marginLeft: 30, borderRadius: 10, backgroundColor: 'while', flexDirection: 'row' }}>
+        <View style={styles.btnCachKhac}>
           <Image source={require('../../assets/google.png')} style={{ width: 40, height: 40, marginTop: 4, marginLeft: 60 }} />
           <Text style={{ fontSize: 18, marginLeft: 60, marginTop: 12 }}>Google</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity>
-        <View style={{ height: 50, width: windownWidth - 60, marginTop: 6, borderWidth: 1, marginLeft: 30, borderRadius: 10, backgroundColor: 'while', flexDirection: 'row' }}>
+      <View style={styles.btnCachKhac}>
           <Image source={require('../../assets/apple.png')} style={{ width: 40, height: 40, marginTop: 4, marginLeft: 60 }} />
           <Text style={{ fontSize: 18, marginLeft: 60, marginTop: 12 }}>Apple</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity>
-        <View style={{ height: 50, width: windownWidth - 60, marginTop: 6, borderWidth: 1, marginLeft: 30, borderRadius: 10, backgroundColor: 'while', flexDirection: 'row' }}>
+      <View style={styles.btnCachKhac}>
           <Image source={require('../../assets/facebook.png')} style={{ width: 40, height: 40, marginTop: 4, marginLeft: 60 }} />
           <Text style={{ fontSize: 18, marginLeft: 60, marginTop: 12 }}>Facebook</Text>
         </View>
@@ -66,42 +66,42 @@ const Login =  ( props ) => {
   const [matKhau, setmatKhau] = useState('');
   const [anHienMK, setanHienMK] = useState(true);
 
-  // const doLogin = () => {
-  //   // kiểm tra hợp lệ dữ liệu
-  //   if (taiKhoan.length == 0) {
-  //     alert("Chưa nhập tài khoản"); return;
-  //   }
-  //   if (matKhau.length == 0) {
-  //     alert("Chưa nhập mật khẩu"); return;
-  //   }
+  const doLogin = () => {
+    // kiểm tra hợp lệ dữ liệu
+    if (taiKhoan.length == 0) {
+      alert("Chưa nhập tài khoản"); return;
+    }
+    if (matKhau.length == 0) {
+      alert("Chưa nhập mật khẩu"); return;
+    }
 
-  //   // thực hiện fetch để lấy dữ liệu về
-  //   let url_check_login = url_api_user + "?username=" + taiKhoan;
-  //   fetch(url_check_login)
-  //     .then((res) => { return res.json(); })
-  //     .then(async (res_login) => {
-  //       if (res_login.length != 1) {
-  //         alert("Sai tài khoản hoặc lỗi trùng lặp dữ liệu"); return;
-  //       } else {
-  //         // số lượng lấy dc 1 bản ghi ==> kiểm tra mật khẩu
-  //         let objUser = res_login[0];
-  //         if (objUser.password != matKhau) {
-  //           alert("Sai mật khẩu"); return;
-  //         } else {
-  //           // đúng mật khẩu lưu thông tin vào storage
-  //           try {
-  //             await AsyncStorage.setItem(keys, JSON.stringify(objUser));
-  //             // chuyển sang màn hình home
-  //             props.navigation.navigate('Main');
-  //             alert("đăng nhập thành công");
-  //           } catch (e) {
-  //             // saving error
-  //             console.log(e);
-  //           }
-  //         }
-  //       }
-  //     })
-  //   }
+    // thực hiện fetch để lấy dữ liệu về
+    let url_check_login = url_api_user + "?username=" + taiKhoan;
+    fetch(url_check_login)
+      .then((res) => { return res.json(); })
+      .then(async (res_login) => {
+        if (res_login.length != 1) {
+          alert("Sai tài khoản hoặc lỗi trùng lặp dữ liệu"); return;
+        } else {
+          // số lượng lấy dc 1 bản ghi ==> kiểm tra mật khẩu
+          let objUser = res_login[0];
+          if (objUser.password != matKhau) {
+            alert("Sai mật khẩu"); return;
+          } else {
+            // đúng mật khẩu lưu thông tin vào storage
+            try {
+              await AsyncStorage.setItem(keys, JSON.stringify(objUser));
+              // chuyển sang màn hình home
+              props.navigation.navigate('Main');
+              alert("đăng nhập thành công");
+            } catch (e) {
+              // saving error
+              console.log(e);
+            }
+          }
+        }
+      })
+    }
     
     return (
       <View style={{ width: '100%', height: 830, }}>
@@ -112,7 +112,7 @@ const Login =  ( props ) => {
           <View style={{ height: '100%', width: '100%', justifyContent: 'center' }}>
             <Text style={{ fontSize: 24, fontWeight: 'bold', marginLeft: 30 }}>Đăng nhập để bắt đầu.</Text>
             {/* tài khoản*/}
-            <View style={{ borderRadius: 10, width: windownWidth - 60, marginLeft: 30, height: 45, marginTop: 20, backgroundColor: '#ffff', flexDirection: 'row', alignItems: 'center' }}>
+            <View style={styles.input}>
               <Image source={require('../../assets/user.png')} resizeMode='stretch'
                 style={{ width: 20, height: 20, marginLeft: 10 }} />
               <TextInput placeholder='tài khoản'
@@ -121,7 +121,7 @@ const Login =  ( props ) => {
                 onChangeText={(user) => { settaiKhoan(user) }} />
             </View>
             {/* mật khẩu*/}
-            <View style={{ borderRadius: 10, width: windownWidth - 60, marginLeft: 30, height: 45, marginTop: 20, backgroundColor: '#ffff', flexDirection: 'row', alignItems: 'center' }}>
+            <View style={styles.input}>
               <Image source={require('../../assets/padlock.png')} resizeMode='stretch'
                 style={{ width: 20, height: 20, marginLeft: 10 }} />
               <TextInput placeholder='mật khẩu'
@@ -136,19 +136,15 @@ const Login =  ( props ) => {
               </TouchableOpacity>
             </View>
             {/* forget password*/}
-            <View style={{ borderRadius: 10, width: windownWidth - 60, height: 30, marginLeft: 30, marginTop: 20, flexDirection: 'row', alignItems: 'center' }}>
+            <View style={styles.textTaoTK}>
               <TouchableOpacity style={{ position: 'absolute', right: 0, }}
                 onPress={() => { props.navigation.navigate('CreateAccount') }}>
                 <Text style={{ color: 'black', textDecorationLine: 'underline', fontSize: 16 }}>Tạo tài khoản ở đây</Text>
               </TouchableOpacity>
             </View>
             {/* mật khẩu*/}
-            <TouchableOpacity style={{
-              height: 50, width: windownWidth - 60, justifyContent: 'center', alignItems: 'center',
-              backgroundColor: '#4D8D6E', marginLeft: 30, marginTop: 20, borderRadius: 100
-            }}
-              onPress={() => props.navigation.navigate('Main')}
-              >
+            <TouchableOpacity style={styles.btnDNhap}
+              onPress={() => doLogin()}>
               <Text style={{ color: '#ffff', fontSize: 18, fontWeight: 'bold' }}>Đăng nhập</Text>
             </TouchableOpacity>
           </View>
@@ -164,5 +160,43 @@ const Login =  ( props ) => {
 export default Login
 
   const styles = StyleSheet.create({
+      btnDNhap: {
+        height: 50, 
+        width: windownWidth - 60, 
+        justifyContent: 'center', 
+        alignItems: 'center',
+        backgroundColor: '#4D8D6E', 
+        marginLeft: 30, 
+        marginTop: 20, 
+        borderRadius: 100
+      },
+      input: { 
+        borderRadius: 10, 
+        width: windownWidth - 60, 
+        marginLeft: 30, 
+        height: 45, 
+        marginTop: 20, 
+        backgroundColor: '#ffff', 
+        flexDirection: 'row', 
+        alignItems: 'center' 
+      },
+      textTaoTK:{ 
+        borderRadius: 10, 
+        width: windownWidth - 60, 
+        height: 30, marginLeft: 30, 
+        marginTop: 20, 
+        flexDirection: 'row', 
+        alignItems: 'center'
+      },
+      btnCachKhac:{ 
+        height: 50, 
+        width: windownWidth - 60, 
+        marginTop: 20, 
+        borderWidth: 1, 
+        marginLeft: 30, 
+        borderRadius: 10, 
+        backgroundColor: 'while', 
+        flexDirection: 'row' }
 
+      
   })

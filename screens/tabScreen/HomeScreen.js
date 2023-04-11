@@ -7,7 +7,7 @@ import { url_api_listSP, url_api_listTL } from '../../data/api';
 
 
 const windownWidth = Dimensions.get('window').width;
-const HomeScreen = ( props ) => {
+const HomeScreen = (props) => {
     const [isLoading, setIsLoading] = useState(false)
     const [status, setStatus] = useState('For you')
     const [data, setData] = useState([])
@@ -21,22 +21,21 @@ const HomeScreen = ( props ) => {
         fetch(url_api_listSP)
             .then(async (res) => {
                 const posts = await res.json()
-                setData(posts)
-                setM_Data(posts)
+                setData(posts.data)
+                setM_Data(posts.data)
                 setIsLoading(false)
             })
             .catch(err => {
-                console.log(err);
+                console.log("LỖi ở SP " + err);
             })
     }
 
     const getCategory = () => {
-        console.log(url_api_listTL);
-        fetch(url_api_listTL.data)
+        fetch(url_api_listTL)
             .then(async (res) => {
                 const categories = await res.json()
-                setCategories(categories)
-                
+                setCategories(categories.data)
+
             })
     }
 
@@ -53,39 +52,43 @@ const HomeScreen = ( props ) => {
     return (
         <View style={styles.container}>
             <View style={{
-                width: windownWidth - 20, marginLeft: 10, height: 45,
-                marginTop: 10, flexDirection: 'row', alignItems: 'center'
+                borderRadius: 10, width: windownWidth - 20, height: 45,
+                marginTop: 20, backgroundColor: '#ffff', flexDirection: 'row', alignItems: 'center',
+                marginRight: 10,
             }}>
-                <Text style={styles.textTieuDe}>VN Poly.</Text>
+                <TextInput placeholder='nhập từ khóa cần tìm'
+                    style={{ height: '100%', flex: 1, marginLeft: 20, fontSize: 18 }}
+                    autoCapitalize={false} />
                 <TouchableOpacity style={{
                     height: '100%', aspectRatio: 1,
-                    justifyContent: 'center', alignItems: 'center', right: 0
+                    justifyContent: 'center', alignItems: 'center'
                 }}>
-                    <Image source={require('../../assets/bell.png')} resizeMode='stretch'
+                    <Image source={require('../../assets/search.png')} resizeMode='stretch'
                         style={{ width: 30, height: 30, marginRight: 10 }} />
                 </TouchableOpacity>
             </View>
+
             <View style={styles.thanhngang}></View>
-            
+
             <View style={styles.listTab}>
-            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                {
-                    categories.map(item => (
-                        <TouchableOpacity style={[styles.btnTab, status === item.name && styles.btnTabActive]}
-                            onPress={() => {
-                                setStatusFilter(item.name)
-                                setM_Data(data.filter((m_item) => m_item.categoryId == item._id).map((item) => (item)))
-                            }}>
-                            <Text style={[styles.textTab, status === item.name && styles.textActive]}>{item.name}</Text>
-                        </TouchableOpacity>
-                    ))
-                }
-            </ScrollView>
-        </View>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                    {
+                        categories.map(item => (
+                            <TouchableOpacity style={[styles.btnTab, status === item.name && styles.btnTabActive]}
+                                onPress={() => {
+                                    setStatusFilter(item.name)
+                                    setM_Data(data.filter((m_item) => m_item.id_theloai == item._id).map((item) => (item)))
+                                }}>
+                                <Text style={[styles.textTab, status === item.name && styles.textActive]}>{item.name}</Text>
+                            </TouchableOpacity>
+                        ))
+                    }
+                </ScrollView>
+            </View>
             <FlatList
                 data={m_Data}
                 renderItem={({ item, index }) =>
-                    <ItemTinTuc key={index} title={item.data.name} content={item.data.price} image={item.data.image} author={item.data.id_theloai} />
+                    <ItemTinTuc key={index} name={item.name} price={item.price} image={item.image} category={item.id_theloai.name} desc={item.desc} />
                 }
                 keyExtractor={(item, index) => index.toString()}
                 refreshControl={
@@ -112,7 +115,6 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         fontSize: 24,
         fontWeight: 'bold',
-        marginRight: 220,
         color: '#4D8D6E'
     },
     textND: {

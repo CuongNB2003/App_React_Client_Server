@@ -1,8 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
-//import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { keys, url_api_post, url_api_user } from '../../data/api';
-//import * as Updates from "expo-updates"
 
 
 

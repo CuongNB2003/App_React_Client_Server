@@ -1,9 +1,9 @@
 import { Dimensions, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import { keys, url_api_user } from '../../data/api';
-//import AsyncStorage from '@react-native-async-storage/async-storage';
-//import * as ImagePicker from 'expo-image-picker'
-//import * as FileSystem from 'expo-file-system'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as ImagePicker from 'expo-image-picker'
+import * as FileSystem from 'expo-file-system'
 
 const windownWidth = Dimensions.get('window').width;
 
@@ -14,88 +14,88 @@ const TaoTaiKhoan = (props) => {
   const [image, setimage] = useState('')
   const [anHienMK, setanHienMK] = useState(true);
 
-  // const pickImage = async () => {
+  const pickImage = async () => {
 
-  //   // Đọc ảnh từ thư viện thì không cần khai báo quyền
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //       mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //       allowsEditing: true,
-  //       aspect: [4, 3], // khung view cắt ảnh 
-  //       quality: 1,
-  //   });
-
-
-  //   console.log(result);
+    // Đọc ảnh từ thư viện thì không cần khai báo quyền
+    let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3], // khung view cắt ảnh 
+        quality: 1,
+    });
 
 
-  //   if (!result.canceled) {
-  //       // chuyển ảnh thành base64 để upload lên json
-  //       let _uri = result.assets[0].uri;  // địa chỉ file ảnh đã chọn
-  //       let file_ext = _uri.substring(_uri.lastIndexOf('.') + 1); // lấy đuôi file
+    console.log(result);
 
 
-  //       FileSystem.readAsStringAsync(_uri, { encoding: 'base64' })
-  //           .then((res) => {
-  //               // phải nối chuỗi với tiền tố data image
-  //               setimage("data:image/" + file_ext + ";base64," + res);
-  //               console.log(image);
-  //               // upload ảnh lên api thì dùng PUT có thể viết ở đây
-  //           });
+    if (!result.canceled) {
+        // chuyển ảnh thành base64 để upload lên json
+        let _uri = result.assets[0].uri;  // địa chỉ file ảnh đã chọn
+        let file_ext = _uri.substring(_uri.lastIndexOf('.') + 1); // lấy đuôi file
 
 
-  //   }
+        FileSystem.readAsStringAsync(_uri, { encoding: 'base64' })
+            .then((res) => {
+                // phải nối chuỗi với tiền tố data image
+                setimage("data:image/" + file_ext + ";base64," + res);
+                console.log(image);
+                // upload ảnh lên api thì dùng PUT có thể viết ở đây
+            });
 
 
-  // }
-
-  // const ThemUser = () => {
-  //   fetch(url_api_user, {
-  //     method: 'POST',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       username: username,
-  //       password: matKhau,
-  //       fullname: fullname,
-  //       image: image
-  //     }),
-
-  //   })
-  //     .then(async (res) => {
-  //       let url_check_login = url_api_user + "?username=" + username;
-  //       if (res.status == 201) {
-  //         fetch(url_check_login)
-  //           .then((res) => { return res.json() })
-  //           .then(async (res_login) => {
-  //             if (res_login.length != 1) {
-  //               alert('Tài khoản đã tồn tại')
-  //               return
-  //             } else {
-  //               let objUser = res_login[0]
-  //               try {
-  //                 console.log(objUser);
-  //                 alert('Tạo thành công')
-  //                 await AsyncStorage.setItem(keys, JSON.stringify(objUser))
-  //                 props.navigation.navigate('Main')
-  //               } catch (error) {
-  //                 console.log(error);
-  //               }
-
-  //             }
-  //           })
-  //           .catch((err) => {
-  //             console.log(err);
-  //           })
-  //       }
+    }
 
 
-  //     })
-  //     .catch((ex) => {
-  //       console.log(ex);
-  //     });
-  // }
+  }
+
+  const ThemUser = () => {
+    fetch(url_api_user, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        username: username,
+        password: matKhau,
+        fullname: fullname,
+        image: image
+      }),
+
+    })
+      .then(async (res) => {
+        let url_check_login = url_api_user + "?username=" + username;
+        if (res.status == 201) {
+          fetch(url_check_login)
+            .then((res) => { return res.json() })
+            .then(async (res_login) => {
+              if (res_login.length != 1) {
+                alert('Tài khoản đã tồn tại')
+                return
+              } else {
+                let objUser = res_login[0]
+                try {
+                  console.log(objUser);
+                  alert('Tạo thành công')
+                  await AsyncStorage.setItem(keys, JSON.stringify(objUser))
+                  props.navigation.navigate('Main')
+                } catch (error) {
+                  console.log(error);
+                }
+
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+        }
+
+
+      })
+      .catch((ex) => {
+        console.log(ex);
+      });
+  }
 
 
   return (
@@ -104,7 +104,7 @@ const TaoTaiKhoan = (props) => {
       <Text style={styles.conntent}>Hãy tạo tài khoản để có trải{'\n'}nghiệm tốt nhất.</Text>
       <View style={{alignItems: 'center'}}>
         <TouchableOpacity 
-        //onPress={pickImage}
+        onPress={pickImage}
         >
           {
             image ? (
@@ -124,15 +124,6 @@ const TaoTaiKhoan = (props) => {
           style={styles.textInput}
           autoCapitalize={false}
           onChangeText={(txt) => { setusername(txt) }} />
-      </View>
-      <View style={styles.input}>
-        <Image source={require('../../assets/user.png')}
-          resizeMode='stretch'
-          style={styles.iconInput} />
-        <TextInput placeholder='họ và tên'
-          style={styles.textInput}
-          autoCapitalize={false}
-          onChangeText={(txt) => { setfullname(txt) }} />
       </View>
       {/* mật khẩu*/}
       <View style={styles.input}>
@@ -170,7 +161,7 @@ const TaoTaiKhoan = (props) => {
       </View>
       {/* tạo tài khoản*/}
       <TouchableOpacity style={styles.btnThem}
-        //onPress={ThemUser}
+        onPress={ThemUser}
         >
         <Text style={styles.textBtn}>Tạo tài khoản</Text>
       </TouchableOpacity>

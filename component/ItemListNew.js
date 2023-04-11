@@ -5,9 +5,10 @@ const ItemListNew = ( props ) => {
     const {dulieu} = props;
     return (
         <View style={styles.container}>
-            <Image source={{uri: dulieu.image}} style={styles.image} />
+            <Image source={{ uri: 'http://192.168.1.6:3000/'+dulieu.image }} style={styles.image} />
             <View style={styles.content}>
                 <Text numberOfLines={2} style={styles.textTitle}>{dulieu.name}</Text>
+                <Text numberOfLines={3} >{dulieu.price}</Text>
                 <Text numberOfLines={3} >{dulieu.price}</Text>
             </View>
         </View>
@@ -26,6 +27,7 @@ const styles = StyleSheet.create({
         width: 120,
         height: 120,
         borderRadius: 10,
+        borderWidth: 1,
     },
     textTitle: {
         fontSize: 20,
